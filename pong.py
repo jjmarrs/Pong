@@ -15,13 +15,18 @@ title = pygame.display.set_caption("Pong")
 
 def move_object():
     if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_w:
+        if event.key == pygame.K_w and left_coordinate[1] >= 5: #aestheticly pleasing
             screen.fill(BLACK)
             left_coordinate[1] -= 1
-            # left_coordinate[3] += 1
-            pygame.time.delay(10)
+            pygame.time.delay(1)
             print(left_coordinate[1])
-            # print(left_coordinate[3])
+
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_s and left_coordinate[1] <= 375: #aestheticly pleasing
+            screen.fill(BLACK)
+            left_coordinate[1] += 1
+            pygame.time.delay(1)
+            print(left_coordinate[1])
 
 
 while 1:
