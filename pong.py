@@ -1,3 +1,6 @@
+#Recreated Pong
+#Created by JJ Marrs with the help of Noize and Petras98
+
 import sys, pygame, random, time
 pygame.init()
 
@@ -22,33 +25,33 @@ def move_left_slider():
         if event.key == pygame.K_w and left_coordinate[1] >= 5: #aestheticly pleasing
             SCREEN.fill(BLACK)
             left_coordinate[1] -= 1
-            pygame.time.delay(1)
+            # pygame.time.delay(1)
 
-    if event.type == pygame.KEYDOWN: #if 'w' key pressed, move down
+    if event.type == pygame.KEYDOWN: #if 's' key pressed, move down
         if event.key == pygame.K_s and left_coordinate[1] <= 375:
             SCREEN.fill(BLACK)
             left_coordinate[1] += 1
-            pygame.time.delay(1)
+            # pygame.time.delay(1)
 
 
 def move_ball():
 
     global delta_x
     global delta_y
-    pygame.time.wait(5)
+    # pygame.time.wait(5)
     SCREEN.fill(BLACK)
 
     #Within borders, move ball
-    if ball_coordinate[1] >= 20 and ball_coordinate[1] <= 465:
+    if ball_coordinate[1] >= 15 and ball_coordinate[1] <= 465:
         ball_coordinate[0] += delta_x
         ball_coordinate[1] += delta_y
 
         #if it hits the top or bottom, bounce the ball at an angle
-        if ball_coordinate[1] == 20 or ball_coordinate[1] == 465:
+        if ball_coordinate[1] == 15 or ball_coordinate[1] == 465:
             delta_y *= -1
 
         #if it hits the left or right wall, reset ball at center
-        if ball_coordinate[0] == 20 or ball_coordinate[0] == 785:
+        if ball_coordinate[0] == 15 or ball_coordinate[0] == 785:
             ball_coordinate[0] = 400
             ball_coordinate[1] = 240
             delta_x *= -1
@@ -62,7 +65,13 @@ def move_ball():
         if ball_coordinate[0] == right_coordinate[0]and ball_coordinate[1] <= right_coordinate[1] + right_coordinate[3] and ball_coordinate[1] >= right_coordinate[1]:
             delta_x *= -1
 
-# def move_right_slider():
+
+def right_slider_AI():
+
+    if ball_coordinate[1] < (right_coordinate[1] - 50) and right_coordinate[1] >= 5:
+        right_coordinate[1] -= 1
+    if ball_coordinate[1] > (right_coordinate[1] - 50) and right_coordinate[1] <= 375:
+        right_coordinate[1] += 1
 
 
 
@@ -73,12 +82,14 @@ while not_done:
 
     move_left_slider()
     move_ball()
+    right_slider_AI()
 
     ball = pygame.draw.circle(SCREEN, WHITE, ball_coordinate, RADIUS)
     left_slider = pygame.draw.rect(SCREEN, WHITE, left_coordinate)
     right_slider = pygame.draw.rect(SCREEN, WHITE, right_coordinate)
 
     pygame.display.flip()
+    pygame.time.wait(1)
 
 pygame.quit()
 quit()
