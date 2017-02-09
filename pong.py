@@ -7,6 +7,7 @@ WHITE = 255, 255, 255
 RADIUS = 15
 delta_x = 1 #speed of ball
 delta_y = 1
+left = True
 ball_coordinate = [400, 240]
 left_coordinate = [50, 200, 30, 100] #x, y, width, height for left slider
 right_coordinate = [700, 200, 30, 100] #Right slider
@@ -31,14 +32,18 @@ def move_left_slider():
 
 
 def move_ball():
+
+    global delta_x
+    global delta_y
     pygame.time.wait(10)
     SCREEN.fill(BLACK)
+
     if ball_coordinate[1] >= 20 and ball_coordinate[1] <= 465:
         ball_coordinate[0] += delta_x
         ball_coordinate[1] += delta_y
         if ball_coordinate[1] == 20 or ball_coordinate[1] == 465:
-            delta_x = delta_x * -1
-            delta_y = delta_y * -1
+            delta_x *= -1
+            delta_y *= -1
 
 while not_done:
     for event in pygame.event.get():
