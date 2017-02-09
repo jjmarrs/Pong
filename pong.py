@@ -58,6 +58,14 @@ def move_ball():
         if ball_coordinate[0] == left_coordinate[0] + left_coordinate[2] and ball_coordinate[1] <= left_coordinate[1] + left_coordinate[3] and ball_coordinate[1] >= left_coordinate[1]:
             delta_x *= -1
 
+        #if ball hits right slider, bounce back at an angle
+        if ball_coordinate[0] == right_coordinate[0]and ball_coordinate[1] <= right_coordinate[1] + right_coordinate[3] and ball_coordinate[1] >= right_coordinate[1]:
+            delta_x *= -1
+
+# def move_right_slider():
+
+
+
 while not_done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
