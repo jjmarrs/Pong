@@ -5,8 +5,6 @@ SIZE = width, height = 800, 480
 BLACK = 0, 0, 0
 WHITE = 255, 255, 255
 RADIUS = 15
-# rand_seed = random.seed(pygame.time.Clock.tick())
-# rand_num = random.choice([-1,1])
 delta_x = 1 #direction of ball
 delta_y = 1
 ball_coordinate = [400, 240]
@@ -53,15 +51,12 @@ def move_ball():
         if ball_coordinate[0] == 20 or ball_coordinate[0] == 785:
             ball_coordinate[0] = 400
             ball_coordinate[1] = 240
-            delta_x *= -1 
+            delta_x *= -1
             delta_y *= -1
 
-
         #if ball hits left slider, bounce back at an angle
-        # if ball_coordinate[1] < (left_coordinate[1] + left_coordinate[3]/2) and ball_coordinate[1] > (left_coordinate[1] - left_coordinate[3]/2) and ball_coordinate[0] < (left_coordinate[0] + 38):
         if ball_coordinate[0] == left_coordinate[0] + left_coordinate[2] and ball_coordinate[1] <= left_coordinate[1] + left_coordinate[3] and ball_coordinate[1] >= left_coordinate[1]:
             delta_x *= -1
-            #38 = left side of slider + width + 7.5 for half of radius of ball
 
 while not_done:
     for event in pygame.event.get():
