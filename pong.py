@@ -7,7 +7,6 @@ WHITE = 255, 255, 255
 RADIUS = 15
 delta_x = 1 #speed of ball
 delta_y = 1
-left = True
 ball_coordinate = [400, 240]
 left_coordinate = [50, 200, 30, 100] #x, y, width, height for left slider
 right_coordinate = [700, 200, 30, 100] #Right slider
@@ -18,13 +17,13 @@ TITLE = pygame.display.set_caption("Pong")
 
 
 def move_left_slider():
-    if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN: #if 'w' key pressed, move up
         if event.key == pygame.K_w and left_coordinate[1] >= 5: #aestheticly pleasing
             SCREEN.fill(BLACK)
             left_coordinate[1] -= 1
             pygame.time.delay(1)
 
-    if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN: #if 'w' key pressed, move down
         if event.key == pygame.K_s and left_coordinate[1] <= 375:
             SCREEN.fill(BLACK)
             left_coordinate[1] += 1
@@ -35,15 +34,27 @@ def move_ball():
 
     global delta_x
     global delta_y
-    pygame.time.wait(10)
+    pygame.time.wait(5)
     SCREEN.fill(BLACK)
 
+    #Within borders, move ball
     if ball_coordinate[1] >= 20 and ball_coordinate[1] <= 465:
-        ball_coordinate[0] += delta_x
-        ball_coordinate[1] += delta_y
+        ball_coordinate[0] -= delta_x
+        ball_coordinate[1] -= delta_y
+
+        #if it hits the top or bottom, bounce the ball at an angle
         if ball_coordinate[1] == 20 or ball_coordinate[1] == 465:
-            delta_x *= -1
             delta_y *= -1
+
+        #if it hits the left or right wall, reset ball at center
+        if ball_coordinate[0] == 20 or ball_coordinate[0] == 785:
+            ball_coordinate[0] = 400
+            ball_coordinate[1] = 240
+
+        #if ball hits left slider, bounce back at an angle
+        if ball_coordinate[1] < (left_coordinate[1] + left_coordinate[3]/2) and ball_coordinate[1] > (left_coordinate[1] - left_coordinate[3]/2) and ball_coordinate[0] < (left_coordinate[0] + 38):
+            delta_x *= -1
+            #38 = left side of slider + width + 7.5 for half of radius of ball
 
 while not_done:
     for event in pygame.event.get():
