@@ -14,6 +14,10 @@ ball_coordinate = [400, 240]
 left_coordinate = [50, 200, 30, 100] #x, y, width, height for left slider
 right_coordinate = [700, 200, 30, 100] #Right slider
 not_done = True
+left_won = False
+right_won = False
+left_score = 0
+right_score = 0
 
 
 SCREEN = pygame.display.set_mode(SIZE)
@@ -38,6 +42,8 @@ def move_ball():
 
     global delta_x
     global delta_y
+    global left_won
+    global right_won
     # pygame.time.wait(5)
     SCREEN.fill(BLACK)
 
@@ -57,6 +63,15 @@ def move_ball():
             delta_x *= -1
             delta_y *= -1
 
+        if ball_coordinate[0] == 16:
+            right_won = True
+            display_score()
+
+        elif ball_coordinate[0] == 784:
+            left_won = True
+            display_score()
+
+
         #if ball hits left slider, bounce back at an angle
         if ball_coordinate[0] == left_coordinate[0] + left_coordinate[2] and ball_coordinate[1] <= left_coordinate[1] + left_coordinate[3] and ball_coordinate[1] >= left_coordinate[1]:
             delta_x *= -1
@@ -74,6 +89,20 @@ def right_slider_AI():
         right_coordinate[1] += 1
 
 
+def display_score():
+    global left_won
+    global right_won
+    global SCREEN
+    global left_score
+    global right_score
+
+    if left_won:
+        left_score += 1
+    if right_won:
+        right_score += 1
+
+    left_won = False
+    right_won = False
 
 while not_done:
     for event in pygame.event.get():
@@ -84,10 +113,16 @@ while not_done:
     move_ball()
     right_slider_AI()
 
+    score = pygame.font.SysFont('pixpixelfjverdana12pt', 40)
+    left_side = score.render(str(left_score), 1, WHITE)
+    right_side = score.render(str(right_score), 1, WHITE)
     ball = pygame.draw.circle(SCREEN, WHITE, ball_coordinate, RADIUS)
     left_slider = pygame.draw.rect(SCREEN, WHITE, left_coordinate)
     right_slider = pygame.draw.rect(SCREEN, WHITE, right_coordinate)
 
+
+    SCREEN.blit(left_side, (300,0))
+    SCREEN.blit(right_side, (500,0))
     pygame.display.flip()
     pygame.time.wait(1)
 
